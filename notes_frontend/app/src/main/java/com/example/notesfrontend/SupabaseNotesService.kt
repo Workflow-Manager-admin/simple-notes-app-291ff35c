@@ -42,7 +42,7 @@ class SupabaseNotesService(
         }
         if (response.status.value in 200..299) {
             return Json.decodeFromString(
-                kotlinx.serialization.builtins.ListSerializer(SupabaseNote.serializer()),
+                ListSerializer(SupabaseNote.serializer()),
                 response.bodyAsText()
             )
         }

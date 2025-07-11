@@ -1,28 +1,6 @@
 package com.example.notesfrontend
 
-import android.app.AlertDialog
-import android.content.Context
-import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.view.*
-import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
-import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import org.json.JSONArray
-import org.json.JSONObject
-
-// PUBLIC_INTERFACE
-data class Note(
-    val id: Long,
-    var title: String,
-    var content: String,
-    var timestamp: Long
-)
+// === All imports at the top, duplicates removed ===
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
@@ -42,6 +20,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
+import android.view.ViewGroup
+import android.view.LayoutInflater
+
+// PUBLIC_INTERFACE
+data class Note(
+    val id: Long,
+    var title: String,
+    var content: String,
+    var timestamp: Long
+)
 
 // PUBLIC_INTERFACE
 class MainActivity : AppCompatActivity(), CoroutineScope {
