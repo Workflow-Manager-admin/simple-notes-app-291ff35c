@@ -1,7 +1,15 @@
 <resources>
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <item name="colorPrimary">#6200EE</item>
-        <item name="colorPrimaryDark">#3700B3</item>
-        <item name="colorAccent">#03DAC5</item>
+    <!-- Light, minimalistic app theme -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">#1976D2</item>
+        <item name="colorPrimaryVariant">#1565C0</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSecondary">#90CAF9</item>
+        <item name="colorOnSecondary">#232323</item>
+        <item name="colorAccent">#FFC107</item>
+        <item name="android:statusBarColor">#1976D2</item>
+        <item name="android:textColorPrimary">#232323</item>
+        <item name="android:textColorSecondary">#90CAF9</item>
     </style>
+    <style name="AppTheme.Light" parent="AppTheme"/>
 </resources>
