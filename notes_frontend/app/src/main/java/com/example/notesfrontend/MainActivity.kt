@@ -23,9 +23,28 @@ data class Note(
     var content: String,
     var timestamp: Long
 )
+import android.app.AlertDialog
+import android.content.Context
+import android.os.Bundle
+import android.view.Menu
+import android.view.View
+import android.widget.EditText
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import org.json.JSONArray
+import org.json.JSONObject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
 // PUBLIC_INTERFACE
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), CoroutineScope {
 
     private lateinit var notesRecyclerView: RecyclerView
     private lateinit var fab: FloatingActionButton
@@ -35,6 +54,20 @@ class MainActivity : AppCompatActivity() {
     private var filteredNotes: MutableList<Note> = mutableListOf()
     private var prefsName = "NotesApp"
     private var storageKey = "notes"
+
+    // Use your real Supabase details in production
+    private val SUPABASE_URL = "https://mzxyorlnbfdkneiezgjz.supabase.co"
+    private val SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im16eHlvcmxuYmZka25laWV6Z2p6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIwNDUxMDksImV4cCI6MjA2NzYyMTEwOX0.URYpbwtC2u5ORBlUzpWPNspXMWq_cLBOKWMOgGbilyQ"
+    private val supabaseService by lazy { SupabaseNotesService(SUPABASE_URL, SUPABASE_KEY) }
+
+    private val job = Job()
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
+
+    override fun onDestroy() {
+        super.onDestroy()
+        job.cancel()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +80,22 @@ class MainActivity : AppCompatActivity() {
 
         notesRecyclerView.layoutManager = LinearLayoutManager(this)
 
-        loadNotes()
+        // TODO: Call Supabase integration here to load notes from Supabase REST API when ready.
+        // Uncomment/Replace this block after verifying SupabaseNotesService implementation and permissions.
+        /*
+        launch {
+            val supabaseNotes = supabaseService.fetchNotes()
+            notes.clear()
+            notes.addAll(supabaseNotes.map { n -> Note(n.id, n.title, n.content, n.timestamp) })
+            notes.sortByDescending { it.timestamp }
+            filteredNotes.clear()
+            filteredNotes.addAll(notes)
+            adapter.notifyDataSetChanged()
+            showOrHideEmptyState()
+        }
+        */
+
+        loadNotes() // This loads from local for now
         adapter = NotesAdapter(filteredNotes, onEdit = { note -> openEditor(note) }, onDelete = { note -> confirmDelete(note) })
         notesRecyclerView.adapter = adapter
         showOrHideEmptyState()
